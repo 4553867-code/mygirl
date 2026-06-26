@@ -5,11 +5,23 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ура! 🥰❤️</title>
 
-<!-- Подключаем ваш файл стилей, чтобы фон остался градиентным -->
+<!-- Подключаем твой файл стилей, чтобы фон остался градиентным -->
 <link rel="stylesheet" href="style.css">
 
 <style>
-    /* Стили для фотографии/картинки котиков */
+    /* Создаем изолированный контейнер для заднего фона с сердечками */
+    #hearts-background {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: 1; 
+        pointer-events: none;
+        overflow: hidden;
+    }
+
+    /* Стили для картинки котиков (точно как на первой странице) */
     .profile-photo-container {
         margin-bottom: 25px;
         display: flex;
@@ -17,9 +29,9 @@
     }
 
     .profile-photo {
-        width: 150px;         
-        height: 150px;        
-        object-fit: contain; /* Чтобы рисованные котики не обрезались */
+        width: 130px;         
+        height: 130px;        
+        object-fit: contain; /* Чтобы котики полностью помещались и не обрезались */
         background-color: #ffffff; 
         border: none;         
     }
@@ -33,7 +45,13 @@
         font-weight: 500;
     }
 
-    /* Финальная кнопка-подтверждение */
+    /* Принудительно поднимаем карточку выше фона с сердечками */
+    .container {
+        position: relative;
+        z-index: 100 !important; 
+    }
+
+    /* Финальная кнопка-подтверждение, ведущая на следующий экран */
     .final-btn {
         display: block;
         background: linear-gradient(135deg, #ff758f, #ff4d6d);
@@ -44,14 +62,38 @@
         text-decoration: none;
         border-radius: 20px;
         box-shadow: 0 6px 15px rgba(255, 77, 109, 0.3);
+        transition: transform 0.2s ease;
+    }
+
+    .final-btn:hover {
+        transform: scale(1.05);
+    }
+
+    /* Стили для падающих сердечек */
+    .falling-heart {
+        position: absolute; 
+        top: -40px;
+        user-select: none;
+        pointer-events: none; 
+        animation: fall linear forwards;
+    }
+
+    @keyframes fall {
+        0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+        15% { opacity: 0.6; }
+        85% { opacity: 0.6; }
+        100% { transform: translateY(105vh) rotate(360deg); opacity: 0; }
     }
 </style>
 </head>
 <body>
 
+<!-- Контейнер для сердечек на заднем фоне -->
+<div id="hearts-background"></div>
+
 <div class="container">
 
-    <!-- Картинка с обнимающимися котиками. Замените 2.webp на имя вашей новой картинки -->
+    <!-- Картинка с котиками. Убедись, что файл в репозитории называется именно 2.webp (или поменяй расширение) -->
     <div class="profile-photo-container">
         <img class="profile-photo" src="2.webp" alt="Ура!">
     </div>
@@ -61,10 +103,38 @@
     <div class="subtitle">Я был готов что скажешь "нет" ахах</div>
 
     <div class="buttons">
-        <a class="final-btn" href="#">Да Да дА</a>
+        <a class="final-btn" href="next.html">Да Да дА</a>
     </div>
 
 </div>
+
+<!-- Скрипт для падающих сердечек -->
+<script>
+    function createHeart() {
+        const bg = document.getElementById('hearts-background');
+        if (!bg) return;
+
+        const heart = document.createElement('div');
+        heart.classList.add('falling-heart');
+        
+        const colors = ['#ffb3c1', '#ff85a1', '#fbb1bd', '#ffccd5', '#ff4d6d'];
+        heart.style.color = colors[Math.floor(Math.random() * colors.length)];
+        
+        const heartTypes = ['❤️', '💖', '💝', '💕'];
+        heart.innerText = heartTypes[Math.floor(Math.random() * heartTypes.length)];
+        
+        heart.style.left = Math.random() * 100 + 'vw';
+        heart.style.fontSize = Math.random() * 25 + 20 + 'px';
+        
+        const duration = Math.random() * 4 + 5;
+        heart.style.animationDuration = duration + 's';
+        
+        bg.appendChild(heart);
+        
+        setTimeout(() => { heart.remove(); }, duration * 1000);
+    }
+    setInterval(createHeart, 350);
+</script>
 
 </body>
 </html>
