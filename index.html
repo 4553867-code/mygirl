@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>💖</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+<style>
+    /* Красивый живой градиент на фоне */
+    body {
+        margin: 0;
+        padding: 0;
+        overflow: hidden; /* Прячем полосы прокрутки */
+        position: relative;
+        background: linear-gradient(135deg, #ffe5ec, #ffccd5, #fff0f5, #fae0e4);
+        background-size: 400% 400%;
+        animation: gradientAnimation 15s ease infinite;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    /* Анимация перелива градиента */
+    @keyframes gradientAnimation {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+
+    /* Стили для фотографии */
+    .profile-photo-container {
+        margin-bottom: 25px;
+        display: flex;
+        justify-content: center;
+    }
+
+    .profile-photo {
+        width: 130px;         /* Уменьшенный размер фотографии */
+        height: 130px;        /* Уменьшенный размер фотографии */
+        object-fit: cover;    
+        border-radius: 50%;   
+        background-color: #ffffff; /* Белый фон, чтобы фото сливалось с карточкой */
+        border: none;         /* Полностью убрали красную рамку */
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); /* Очень легкая, почти незаметная тень для объема */
+        position: relative;
+        z-index: 10; 
+    }
+
+    .container {
+        position: relative;
+        z-index: 10; 
+        background: rgba(255, 255, 255, 0.75); /* Полупрозрачный белый фон карточки */
+        backdrop-filter: blur(10px); /* Эффект матового стекла */
+        padding: 40px;
+        border-radius: 24px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.5);
+    }
+
+    /* Стили для падающих сердечек */
+    .falling-heart {
+        position: fixed;
+        top: -40px;
+        user-select: none;
+        pointer-events: none; 
+        z-index: 1;
+        animation: fall linear forwards;
+    }
+
+    @keyframes fall {
+        0% {
+            transform: translateY(0) rotate(0deg);
+            opacity: 0;
+        }
+        15% {
+            opacity: 0.7; 
+        }
+        85% {
+            opacity: 0.7;
+        }
+        100% {
+            transform: translateY(105vh) rotate(360deg);
+            opacity: 0;
+        }
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- Блок с вашей фотографией. Замените ВАШЕ_ФОТО.jpg на имя своего файла -->
+    <div class="profile-photo-container">
+        <img class="profile-photo" src="1.webp" alt="Моя фотография">
+    </div>
+
+    <h2>Пойдёшь со мной на свидание?</h2>
+
+    <div class="buttons">
+        <a class="btn yes" href="yes.html" onclick="sendAnswer('Да')">Да ❤️</a>
+
+        <a class="btn no" href="no.html" onclick="sendAnswer('Нет')">Нет 💔</a>
+    </div>
+
+</div>
+
+<!-- Скрипт для создания эффекта падающих сердечек -->
+<script>
+    function createHeart() {
+        const heart = document.createElement('div');
+        heart.classList.add('falling-heart');
+        
+        const colors = ['#ffb3c1', '#ff85a1', '#fbb1bd', '#ffccd5', '#ff4d6d'];
+        heart.style.color = colors[Math.floor(Math.random() * colors.length)];
+        
+        const heartTypes = ['❤️', '💖', '💝', '💕'];
+        heart.innerText = heartTypes[Math.floor(Math.random() * heartTypes.length)];
+        
+        heart.style.left = Math.random() * 100 + 'vw';
+        
+        heart.style.fontSize = Math.random() * 25 + 20 + 'px';
+        
+        const duration = Math.random() * 4 + 5;
+        heart.style.animationDuration = duration + 's';
+        
+        document.body.appendChild(heart);
+        
+        setTimeout(() => {
+            heart.remove();
+        }, duration * 1000);
+    }
+
+    setInterval(createHeart, 350);
+</script>
+
+<script src="js/telegram.js"></script>
+
+</body>
+</html>
