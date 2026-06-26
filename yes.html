@@ -21,17 +21,18 @@
         overflow: hidden;
     }
 
-    /* Стили для картинки котиков (точно как на первой странице) */
+    /* Стили для картинки котиков (как на первой странице) */
     .profile-photo-container {
         margin-bottom: 25px;
         display: flex;
         justify-content: center;
+        overflow: hidden; /* ОБРЕЗАЕТ ВСЕ ЛИШНИЕ ПОЛОСКИ ПО БОКАМ */
     }
 
     .profile-photo {
         width: 130px;         
         height: 130px;        
-        object-fit: contain; /* Чтобы котики полностью помещались и не обрезались */
+        object-fit: contain; 
         background-color: #ffffff; 
         border: none;         
     }
@@ -93,7 +94,7 @@
 
 <div class="container">
 
-    <!-- Картинка с котиками. Убедись, что файл в репозитории называется именно 2.webp (или поменяй расширение) -->
+    <!-- Картинка с котиками -->
     <div class="profile-photo-container">
         <img class="profile-photo" src="2.webp" alt="Ура!">
     </div>
