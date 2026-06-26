@@ -5,32 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>💖</title>
 
+<!-- Подключаем ваш файл стилей -->
 <link rel="stylesheet" href="style.css">
 
 <style>
-    /* Красивый живой градиент на фоне */
-    body {
-        margin: 0;
-        padding: 0;
-        overflow: hidden; /* Прячем полосы прокрутки */
-        position: relative;
-        background: linear-gradient(135deg, #ffe5ec, #ffccd5, #fff0f5, #fae0e4);
-        background-size: 400% 400%;
-        animation: gradientAnimation 15s ease infinite;
-        height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    /* Анимация перелива градиента */
-    @keyframes gradientAnimation {
-        0% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-        100% { background-position: 0% 50%; }
-    }
-
-    /* Стили для фотографии */
+    /* Дополнительные стили для фотографии, чтобы она сливалась с карточкой */
     .profile-photo-container {
         margin-bottom: 25px;
         display: flex;
@@ -38,26 +17,15 @@
     }
 
     .profile-photo {
-        width: 130px;         /* Уменьшенный размер фотографии */
-        height: 130px;        /* Уменьшенный размер фотографии */
+        width: 130px;         
+        height: 130px;        
         object-fit: cover;    
         border-radius: 50%;   
-        background-color: #ffffff; /* Белый фон, чтобы фото сливалось с карточкой */
-        border: none;         /* Полностью убрали красную рамку */
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); /* Очень легкая, почти незаметная тень для объема */
+        background-color: #ffffff; 
+        border: none;         
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); 
         position: relative;
         z-index: 10; 
-    }
-
-    .container {
-        position: relative;
-        z-index: 10; 
-        background: rgba(255, 255, 255, 0.75); /* Полупрозрачный белый фон карточки */
-        backdrop-filter: blur(10px); /* Эффект матового стекла */
-        padding: 40px;
-        border-radius: 24px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-        border: 1px solid rgba(255, 255, 255, 0.5);
     }
 
     /* Стили для падающих сердечек */
@@ -92,7 +60,7 @@
 
 <div class="container">
 
-    <!-- Блок с вашей фотографией. Замените ВАШЕ_ФОТО.jpg на имя своего файла -->
+    <!-- Блок с вашей фотографией. Замените 1.webp на имя своего файла, если нужно -->
     <div class="profile-photo-container">
         <img class="profile-photo" src="1.webp" alt="Моя фотография">
     </div>
@@ -102,7 +70,7 @@
     <div class="buttons">
         <a class="btn yes" href="yes.html" onclick="sendAnswer('Да')">Да ❤️</a>
 
-        <a class="btn no" href="no.html" onclick="sendAnswer('Нет')">Нет 💔</a>
+        <a class="btn no" href="#" onclick="return false;">Нет 💔</a>
     </div>
 
 </div>
@@ -136,7 +104,36 @@
     setInterval(createHeart, 350);
 </script>
 
-<script src="js/telegram.js"></script>
+<!-- Скрипт для убегания кнопки "Нет" -->
+<script>
+    const noBtn = document.querySelector('.no');
+
+    function moveButton() {
+        // Рассчитываем случайные координаты так, чтобы кнопка не улетала за края экрана
+        const x = Math.random() * (window.innerWidth - noBtn.offsetWidth - 40) + 20;
+        const y = Math.random() * (window.innerHeight - noBtn.offsetHeight - 40) + 20;
+        
+        noBtn.style.position = 'fixed';
+        noBtn.style.left = `${x}px`;
+        noBtn.style.top = `${y}px`;
+        noBtn.style.zIndex = '999';
+    }
+
+    // Для компьютеров (наведение мышки)
+    noBtn.addEventListener('mouseover', moveButton);
+
+    // Для телефонов (касание пальцем)
+    noBtn.addEventListener('touchstart', (e) => {
+        e.preventDefault(); // Отменяем стандартный клик/выделение на смартфонах
+        moveButton();
+    });
+
+    // Функция обработки ответа
+    function sendAnswer(answer) {
+        console.log("Выбран ответ: " + answer);
+    }
+</script>
 
 </body>
 </html>
+
